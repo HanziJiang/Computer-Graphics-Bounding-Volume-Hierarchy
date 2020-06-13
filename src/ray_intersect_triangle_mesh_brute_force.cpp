@@ -11,9 +11,34 @@ bool ray_intersect_triangle_mesh_brute_force(
   int & hit_f)
 {
   ////////////////////////////////////////////////////////////////////////////
-  // Replace with your code here:
-  hit_t = 0;
-  hit_f = 0;
-  return false;
+  // the number of triangles in the mesh
+  const int n = F.rows();
+
+  double temp_t;
+  double smallest_t = std::numeric_limits<double>::infinity();
+  Eigen::RowVector3d A, B, C;
+  int temp_hit_f;
+  bool hit = false;
+
+  for (int i = 0; i < n; i++) {
+      A = V.row(F(i, 0));
+      B = V.row(F(i, 1));
+      C = V.row(F(i, 2));
+      if (ray_intersect_triangle(ray, A, B, C, min_t, max_t, temp_t)) {
+        if (temp_t < smallest_t) {
+          smallest_t = temp_t;
+          temp_hit_f = i;
+          hit = true;
+        }
+      }
+    }
+
+    if (hit) {
+      hit_t = smallest_t;
+      hit_f = temp_hit_f;
+    }
+
+    return false;
+
   ////////////////////////////////////////////////////////////////////////////
 }
