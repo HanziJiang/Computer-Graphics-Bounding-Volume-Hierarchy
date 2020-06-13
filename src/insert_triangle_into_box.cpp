@@ -17,8 +17,8 @@ void insert_triangle_into_box(
   ////////////////////////////////////////////////////////////////////////////
   for (int i = 0; i < 3; i++)
   {
-    B.min_corner[i] = min(a[i], b[2], c[i], B.min_corner[i]);
-    B.max_corner[i] = max(a[i], b[2], c[i], B.min_corner[i]);
+    B.min_corner[i] = min(a[i], b[i], c[i], B.min_corner[i]);
+    B.max_corner[i] = max(a[i], b[i], c[i], B.min_corner[i]);
   }
 
   ////////////////////////////////////////////////////////////////////////////
