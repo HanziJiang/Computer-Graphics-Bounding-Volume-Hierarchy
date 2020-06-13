@@ -36,7 +36,7 @@ AABBTree::AABBTree(
     axis = (x_length > y_length) ? 0 : 1;
     if (z_length > x_length && z_length > y_length) axis = 2;
 
-    const double m = box.max_corner[axis] + box.min_corner[axis] / 2;
+    const double m = (box.max_corner[axis] + box.min_corner[axis]) / 2;
 
     std::vector<std::shared_ptr<Object>> left_objects;
     std::vector<std::shared_ptr<Object>> right_objects;
