@@ -1,6 +1,5 @@
 #include "AABBTree.h"
 #include "insert_box_into_box.h"
-#include "iostream"
 
 AABBTree::AABBTree(
   const std::vector<std::shared_ptr<Object> > & objects,
