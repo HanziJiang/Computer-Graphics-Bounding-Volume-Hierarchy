@@ -36,6 +36,7 @@ bool ray_intersect_triangle_mesh_brute_force(
     if (hit) {
       hit_t = smallest_t;
       hit_f = temp_hit_f;
+      return true;
     }
 
     return false;
