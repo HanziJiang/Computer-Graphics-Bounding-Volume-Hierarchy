@@ -1,5 +1,6 @@
 #include "AABBTree.h"
 #include "insert_box_into_box.h"
+#include "iostream"
 
 AABBTree::AABBTree(
   const std::vector<std::shared_ptr<Object> > & objects,
@@ -45,6 +46,21 @@ AABBTree::AABBTree(
         left_objects.push_back(objects[i]);
       } else {
         right_objects.push_back(objects[i]);
+      }
+    }
+
+    const int left_size = left_objects.size();
+    const int right_size = right_objects.size();
+    if (left_size == 0) {
+      for (int i = right_size - 1; i >= right_size / 2; i--) {
+        left_objects.push_back(right_objects[i]);
+        right_objects.pop_back();
+      }
+    }
+    else if (right_size == 0) {
+      for (int i = left_size - 1; i >= left_size / 2; i--) {
+        right_objects.push_back(left_objects[i]);
+        left_objects.pop_back();
       }
     }
 
