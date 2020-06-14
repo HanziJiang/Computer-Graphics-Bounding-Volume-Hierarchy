@@ -1,5 +1,4 @@
 #include "ray_intersect_box.h"
-#include <iostream>
 
 bool ray_intersect_box(
   const Ray & ray,

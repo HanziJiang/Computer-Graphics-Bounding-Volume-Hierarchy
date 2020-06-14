@@ -11,7 +11,7 @@ bool ray_intersect_triangle_mesh_brute_force(
   int & hit_f)
 {
   ////////////////////////////////////////////////////////////////////////////
-  // the number of triangles in the mesh
+  // the number of triangles
   const int n = F.rows();
 
   double temp_t;
@@ -36,7 +36,7 @@ bool ray_intersect_triangle_mesh_brute_force(
     if (hit) {
       hit_t = smallest_t;
       hit_f = temp_hit_f;
-      return true;
+      return (hit_t >= min_t && hit_t <= max_t);
     }
 
     return false;

@@ -1,5 +1,4 @@
 #include "AABBTree.h"
-#include "iostream"
 
 // See AABBTree.h for API
 bool AABBTree::ray_intersect(
@@ -16,15 +15,15 @@ bool AABBTree::ray_intersect(
   double left_t, right_t;
   std::shared_ptr<Object> left_descendant, right_descendant;
 
-  bool i1 = (left == NULL) ? false : left->ray_intersect(ray, min_t, max_t, left_t, left_descendant);
-  bool i2 = (right == NULL) ? false : right->ray_intersect(ray, min_t, max_t, right_t, right_descendant);
+  bool i1 = (left == NULL || left == 0) ? false : left->ray_intersect(ray, min_t, max_t, left_t, left_descendant);
+  bool i2 = (right == NULL || right == 0) ? false : right->ray_intersect(ray, min_t, max_t, right_t, right_descendant);
 
   std::shared_ptr<AABBTree> AABB_attempt;
 
   if (i1) {
     AABB_attempt = std::dynamic_pointer_cast<AABBTree>(left);
 
-    // it is a shape
+    // if it is a leaf
     if (!AABB_attempt) {
       left_descendant = left;
     }
@@ -33,7 +32,7 @@ bool AABBTree::ray_intersect(
   if (i2) {
     AABB_attempt = std::dynamic_pointer_cast<AABBTree>(right);
 
-    // it is a shape
+    // if it is a leaf
     if (!AABB_attempt) {
       right_descendant = right;
     }
@@ -55,7 +54,7 @@ bool AABBTree::ray_intersect(
     descendant = right_descendant;
   }
   
-  return (!(isinf(t)) && (descendant != 0));
+  return (!isinf(t) && descendant && descendant != 0);
   ////////////////////////////////////////////////////////////////////////////
 }
 

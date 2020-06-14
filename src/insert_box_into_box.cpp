@@ -5,13 +5,10 @@ void insert_box_into_box(
   BoundingBox & B)
 {
   ////////////////////////////////////////////////////////////////////////////
-  B.min_corner[0] = std::min(B.min_corner[0], A.min_corner[0]);
-  B.min_corner[1] = std::min(B.min_corner[1], A.min_corner[1]);
-  B.min_corner[2] = std::min(B.min_corner[2], A.min_corner[2]);
-
-  B.max_corner[0] = std::max(B.max_corner[0], A.max_corner[0]);
-  B.max_corner[1] = std::max(B.max_corner[1], A.max_corner[1]);
-  B.max_corner[2] = std::max(B.max_corner[2], A.max_corner[2]);
+  for (int i = 0; i < 3; i++) {
+    B.min_corner[i] = std::min(A.min_corner[i], B.min_corner[i]);
+    B.max_corner[i] = std::max(A.max_corner[i], B.max_corner[i]);
+  }
   ////////////////////////////////////////////////////////////////////////////
 }
 

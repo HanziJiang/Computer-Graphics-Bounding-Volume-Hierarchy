@@ -11,7 +11,8 @@ AABBTree::AABBTree(
   const int num_object = objects.size();
 
   if (num_object == 0) {
-    left, right = NULL;
+    left = NULL;
+    right = NULL;
   } else if (num_object == 1) {
     left = objects[0];
     right = NULL;
@@ -30,14 +31,14 @@ AABBTree::AABBTree(
     const double y_length = abs(box.max_corner[1] - box.min_corner[1]);
     const double z_length = abs(box.max_corner[2] - box.min_corner[2]);
 
-    // what if infinity?
-
     int axis;
     axis = (x_length > y_length) ? 0 : 1;
     if (z_length > x_length && z_length > y_length) axis = 2;
 
+    // the midpoint of the loggest side
     const double m = (box.max_corner[axis] + box.min_corner[axis]) / 2;
 
+    // divide objects into two lists, according to m
     std::vector<std::shared_ptr<Object>> left_objects;
     std::vector<std::shared_ptr<Object>> right_objects;
     for (int i = 0; i < num_object; i++) {
@@ -48,6 +49,7 @@ AABBTree::AABBTree(
       }
     }
 
+    // if either left list or right list is empty, move half of the elements from the non-empty list to the empty list
     const int left_size = left_objects.size();
     const int right_size = right_objects.size();
     if (left_size == 0) {

@@ -1,7 +1,6 @@
 #include "find_all_intersecting_pairs_using_AABBTrees.h"
 #include "box_box_intersect.h"
 #include <list> 
-#include <iostream>
 
 void find_all_intersecting_pairs_using_AABBTrees(
   const std::shared_ptr<AABBTree> & rootA,
