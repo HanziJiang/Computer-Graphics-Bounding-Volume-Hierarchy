@@ -1,5 +1,5 @@
 #include "point_AABBTree_squared_distance.h"
-#include <queue> // std::priority_queue
+#include <queue>
 #include "CloudPoint.h"
 #include <iostream>
 
@@ -12,8 +12,11 @@ bool point_AABBTree_squared_distance(
     std::shared_ptr<Object> & descendant)
 {
   ////////////////////////////////////////////////////////////////////////////
+  if (!root) return false;
+
+  // Reference: assignment page and https://en.cppreference.com/w/cpp/container/priority_queue
   double d_root = point_box_squared_distance(query, root->box);
-  std::priority_queue<std::pair<double, std::shared_ptr<Object>>> Q;
+  std::priority_queue<std::pair<double, std::shared_ptr<Object>>, std::vector<std::pair<double, std::shared_ptr<Object>>>, std::greater<std::pair<double, std::shared_ptr<Object>>>> Q;
   std::pair<double, std::shared_ptr<Object>> pair = std::make_pair(d_root, root);
   Q.push(pair);
   sqrd = std::numeric_limits<double>::infinity();
@@ -22,14 +25,15 @@ bool point_AABBTree_squared_distance(
   std::shared_ptr<Object> subtree;
   std::shared_ptr<CloudPoint> cloud_point_attempt;
   std::shared_ptr<AABBTree> AABB;
-  double sqrd_min;
+  double sqrd_min = std::numeric_limits<double>::infinity();;
 
   while (!Q.empty()) {
     new_pair = Q.top();
     Q.pop();
     d_s = new_pair.first;
+    if (d_s < min_sqrd || d_s > max_sqrd) continue;
     subtree = new_pair.second;
-    if (d_s < sqrd) {
+    if (d_s < sqrd_min) {
       cloud_point_attempt = std::dynamic_pointer_cast<CloudPoint>(subtree);
       if (cloud_point_attempt) {
         if (cloud_point_attempt->point_squared_distance(query, min_sqrd, max_sqrd, sqrd_min, descendant)) {
