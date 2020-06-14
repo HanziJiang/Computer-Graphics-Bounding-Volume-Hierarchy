@@ -41,13 +41,11 @@ void find_all_intersecting_pairs_using_AABBTrees(
       }
 
     // if second is a leaf
-    } else if (!AABB_attempt_2) {
-      if (box_box_intersect(popped_pair.second->box, AABB_attempt_1->left->box)) {
-        Q.push_back(std::make_pair(popped_pair.second, AABB_attempt_1->left));
-      }
-      if (box_box_intersect(popped_pair.second->box, AABB_attempt_1->right->box)) {
-        Q.push_back(std::make_pair(popped_pair.second, AABB_attempt_1->right));  
-      }
+    } else if (!AABB_attempt_2){
+      if (box_box_intersect(popped_pair.second->box, AABB_attempt_1->left->box))
+        Q.push_back(std::make_pair(AABB_attempt_1->left, popped_pair.second));
+      if (box_box_intersect(popped_pair.second->box, AABB_attempt_1->right->box))
+        Q.push_back(std::make_pair(AABB_attempt_1->right, popped_pair.second));
       
     // if neither is leaf
     } else {
