@@ -27,7 +27,7 @@ bool ray_intersect_triangle(
   if (M == 0) return false;
 
   const double T = -(f * (a * k - j * b) + e * (j * c - a * l) + d * (b * l - k * c)) / M;
-  if (T < min_t) return false;
+  if (T < min_t | T > max_t) return false;
   
   const double gamma = (i * (a * k - j * b) + h * (j * c - a * l) + g * (b * l - k * c)) / M;
   if (gamma < 0 || gamma > 1) return false;
